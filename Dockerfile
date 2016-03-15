@@ -8,12 +8,13 @@
 FROM java:8
 
 ENV SCALA_VERSION 2.11.7
-ENV SBT_VERSION 0.13.9
+ENV SBT_VERSION 0.13.11
 
-# Install Python (node.js needs it)
+# Install Python (node.js needs it) and aws cli so we can push
 RUN \
   apt-get update && \
   apt-get install -y python python-dev python-pip python-virtualenv && \
+  pip install awscli && \
   rm -rf /var/lib/apt/lists/*
 
 # Install Node.js (play compiles assets faster with it)
