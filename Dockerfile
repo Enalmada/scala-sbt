@@ -7,7 +7,7 @@
 # Pull base image
 FROM java:8
 
-ENV SCALA_VERSION 2.11.7
+ENV SCALA_VERSION 2.11.8
 ENV SBT_VERSION 0.13.11
 
 # Install Python (node.js needs it) and aws cli so we can push
