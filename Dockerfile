@@ -31,6 +31,10 @@ RUN \
   rm -rf /tmp/node-v* && \
   npm install -g npm && \
   printf '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
+  
+# Scalajs tests need it  
+RUN \
+  npm install -g jsdom
 
 # Install Scala
 ## Piping curl directly in tar
