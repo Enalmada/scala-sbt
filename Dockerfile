@@ -5,13 +5,16 @@
 #
 
 # Pull base image
-FROM  openjdk:8
+FROM  openjdk:9
 
-ENV SCALA_VERSION 2.12.1
+ENV SCALA_VERSION 2.12.2
 ENV SBT_VERSION 0.13.15
 
 # Scala expects this file
-RUN touch /usr/lib/jvm/java-8-openjdk-amd64/release
+RUN touch /usr/lib/jvm/java-9-openjdk-amd64/release
+
+## https://github.com/docker-library/openjdk/issues/101
+RUN /bin/bash -c "[[ ! -d $JAVA_HOME/conf ]] && ln -s $JAVA_HOME/lib $JAVA_HOME/conf"
 
 # Install Scala
 ## Piping curl directly in tar
@@ -20,13 +23,17 @@ RUN \
   echo >> /root/.bashrc && \
   echo 'export PATH=~/scala-$SCALA_VERSION/bin:$PATH' >> /root/.bashrc
 
-# Install sbt
+# Install rsync: sbt uses it to sync "offline" preloaded-local repo
 RUN \
-  curl -L -o sbt-$SBT_VERSION.deb http://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
-  dpkg -i sbt-$SBT_VERSION.deb && \
-  rm sbt-$SBT_VERSION.deb && \
   apt-get update && \
-  apt-get install sbt && \
+  apt-get install -y rsync && \
+  rm -rf /var/lib/apt/lists/*
+
+# Install sbt via direct download
+RUN \
+  cd /opt/ && \
+  (wget -q -O - https://dl.bintray.com/sbt/native-packages/sbt/0.13.15/sbt-0.13.15.tgz | tar zxf -) && \
+  ln -fs /opt/sbt/bin/sbt /usr/local/bin/sbt && \
   sbt sbtVersion
 
 # Define working directory
