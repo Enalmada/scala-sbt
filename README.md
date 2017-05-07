@@ -5,7 +5,7 @@ This repository contains **Dockerfile** of [Scala](http://www.scala-lang.org) an
 
 ## Base Docker Image ##
 
-* [openjdk:8](https://hub.docker.com/_/openjdk)
+* [openjdk:9](https://hub.docker.com/_/openjdk)
 
 
 ## Installation ##
@@ -13,18 +13,18 @@ This repository contains **Dockerfile** of [Scala](http://www.scala-lang.org) an
 1. Install [Docker](https://www.docker.com)
 2. Pull [automated build](https://registry.hub.docker.com/u/hseeberger/scala-sbt) from public [Docker Hub Registry](https://registry.hub.docker.com):
 ```
-docker pull hseeberger/scala-sbt
+docker pull scalawilliam/scala-sbt-openjdk9
 ```
 Alternatively, you can build an image from Dockerfile:
 ```
-docker build -t hseeberger/scala-sbt github.com/hseeberger/scala-sbt
+docker build -t scalawilliam/scala-sbt-openjdk9 github.com/scalawilliam/scala-sbt-openjdk9
 ```
 
 
 ## Usage ##
 
 ```
-docker run -it --rm hseeberger/scala-sbt
+docker run -it --rm scalawilliam/scala-sbt-openjdk9
 ```
 
 
