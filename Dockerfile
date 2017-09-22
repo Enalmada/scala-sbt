@@ -32,7 +32,7 @@ RUN \
 # Install sbt via direct download
 RUN \
   cd /opt/ && \
-  (wget -q -O - https://dl.bintray.com/sbt/native-packages/sbt/0.13.15/sbt-0.13.15.tgz | tar zxf -) && \
+  (wget -q -O - https://github.com/sbt/sbt/releases/download/v1.0.2/sbt-1.0.2.tgz | tar zxf -) && \
   ln -fs /opt/sbt/bin/sbt /usr/local/bin/sbt && \
   sbt sbtVersion
 
