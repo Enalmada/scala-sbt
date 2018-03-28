@@ -1,14 +1,19 @@
-#
 # Scala and sbt Dockerfile
 #
 # https://github.com/hseeberger/scala-sbt
 #
 
 # Pull base image
-FROM java:8
+FROM  openjdk:9
 
 ENV SCALA_VERSION 2.12.5
 ENV SBT_VERSION 1.1.1
+
+# Scala expects this file
+RUN touch /usr/lib/jvm/java-9-openjdk-amd64/release
+
+## https://github.com/docker-library/openjdk/issues/101
+RUN /bin/bash -c "[[ ! -d $JAVA_HOME/conf ]] && ln -s $JAVA_HOME/lib $JAVA_HOME/conf"
 
 # Install Python (node.js needs it) and aws cli so we can push
 RUN \
@@ -43,7 +48,13 @@ RUN \
   echo >> /root/.bashrc && \
   echo 'export PATH=~/scala-$SCALA_VERSION/bin:$PATH' >> /root/.bashrc
 
-# Install sbt
+# Install rsync: sbt uses it to sync "offline" preloaded-local repo
+RUN \
+  apt-get update && \
+  apt-get install -y rsync && \
+  rm -rf /var/lib/apt/lists/*
+
+# Install sbt via direct download
 RUN \
   curl -L -o sbt-$SBT_VERSION.deb http://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
   dpkg -i sbt-$SBT_VERSION.deb && \
@@ -51,6 +62,6 @@ RUN \
   apt-get update && \
   apt-get install sbt && \
   sbt sbtVersion
-
+  
 # Define working directory
 WORKDIR /root
