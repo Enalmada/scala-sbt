@@ -13,7 +13,7 @@ ENV SBT_VERSION 1.1.2
 RUN touch /usr/lib/jvm/java-9-openjdk-amd64/release
 
 ## https://github.com/docker-library/openjdk/issues/101
-RUN /bin/bash -c "[[ ! -d $JAVA_HOME/conf ]] && ln -s $JAVA_HOME/lib $JAVA_HOME/conf"
+# RUN /bin/bash -c "[[ ! -d $JAVA_HOME/conf ]] && ln -s $JAVA_HOME/lib $JAVA_HOME/conf"
 
 # Install Python (node.js needs it) and aws cli so we can push
 RUN \
