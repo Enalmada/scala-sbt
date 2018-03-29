@@ -63,5 +63,12 @@ RUN \
   apt-get install sbt && \
   sbt sbtVersion
   
+  # Install sbt via direct download
+RUN \
+  cd /opt/ && \
+  (wget -q -O - https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz | tar zxf -) && \
+  ln -fs /opt/sbt/bin/sbt /usr/local/bin/sbt && \
+  sbt sbtVersion
+  
 # Define working directory
 WORKDIR /root
