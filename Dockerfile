@@ -53,17 +53,8 @@ RUN \
   apt-get update && \
   apt-get install -y rsync && \
   rm -rf /var/lib/apt/lists/*
-
-# Install sbt via direct download
-RUN \
-  curl -L -o sbt-$SBT_VERSION.deb http://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
-  dpkg -i sbt-$SBT_VERSION.deb && \
-  rm sbt-$SBT_VERSION.deb && \
-  apt-get update && \
-  apt-get install sbt && \
-  sbt sbtVersion
   
-  # Install sbt via direct download
+# Install sbt via direct download
 RUN \
   cd /opt/ && \
   (wget -q -O - https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz | tar zxf -) && \
