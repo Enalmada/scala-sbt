@@ -7,13 +7,14 @@
 # Pull base image
 FROM  openjdk:9
 
-ENV SCALA_VERSION 2.12.2
+ENV SCALA_VERSION 2.12.5
+ENV SBT_VERSION 1.1.2
 
 # Scala expects this file
 RUN touch /usr/lib/jvm/java-9-openjdk-amd64/release
 
 ## https://github.com/docker-library/openjdk/issues/101
-RUN /bin/bash -c "[[ ! -d $JAVA_HOME/conf ]] && ln -s $JAVA_HOME/lib $JAVA_HOME/conf"
+# RUN /bin/bash -c "[[ ! -d $JAVA_HOME/conf ]] && ln -s $JAVA_HOME/lib $JAVA_HOME/conf"
 
 # Install Scala
 ## Piping curl directly in tar
@@ -31,7 +32,7 @@ RUN \
 # Install sbt via direct download
 RUN \
   cd /opt/ && \
-  (wget -q -O - https://github.com/sbt/sbt/releases/download/v1.0.2/sbt-1.0.2.tgz | tar zxf -) && \
+  (wget -q -O - https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz | tar zxf -) && \
   ln -fs /opt/sbt/bin/sbt /usr/local/bin/sbt && \
   sbt sbtVersion
 
